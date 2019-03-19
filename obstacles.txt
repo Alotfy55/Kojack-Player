@@ -4,3 +4,6 @@ struct	song_data
 		genre 
 		artist
 read songs in a file 
+
+
+map <id , song_data >

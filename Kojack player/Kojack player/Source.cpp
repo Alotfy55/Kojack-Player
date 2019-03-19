@@ -4,8 +4,18 @@
 #include <algorithm>
 #include <cstdio>
 #include <vector>
+#include <map>
 using namespace std;
 
+struct song
+{
+	string name;
+	string genre; 
+	int id;
+	string artist; 
+};
+map <int, song> sang;
+//accessing the data of each song with a unique id , another idea is fuck ids we use the songs name to call for its data
 vector <string> songs;
 void playMusic(const std::string& filename)
 {
@@ -41,7 +51,7 @@ int main ()
 {
 	
 	int nums = song_entrey();
-	for (int i = 1; i <= nums; i++)
+	for (int i = 0; i <= nums; i++)
 	{
 		playMusic(songs[i]);
 	}
@@ -53,7 +63,7 @@ int song_entrey()
 	int num_songs;
 	cout << "How many songs are you adding ?? :" << endl;
 	cin >> num_songs;
-	for (int i = 1; i <= num_songs; i++)
+	for (int i = 0; i <= num_songs; i++)
 	{
 		cout << endl<< "Enter song name : "; 
 		string name; 
