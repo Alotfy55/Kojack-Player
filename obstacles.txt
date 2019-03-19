@@ -1,0 +1,6 @@
+struct	song_data 
+		rating 
+		name 
+		genre 
+		artist
+read songs in a file 
