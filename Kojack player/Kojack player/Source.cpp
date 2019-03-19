@@ -3,7 +3,10 @@
 #include <string>
 #include <algorithm>
 #include <cstdio>
+#include <vector>
 using namespace std;
+
+vector <string> songs;
 void playMusic(const std::string& filename)
 {
 	std::cout << filename <<std::endl;
@@ -33,10 +36,29 @@ void playMusic(const std::string& filename)
 	}
 	std::cout << std::endl << std::endl;
 }
+int song_entrey();
 int main () 
 {
-	std::string x;
-	getline(std::cin, x);
-	playMusic(x);
-	return main (); 
+	
+	int nums = song_entrey();
+	for (int i = 1; i <= nums; i++)
+	{
+		playMusic(songs[i]);
+	}
+	system("pause");
+	return 0; 
+}
+int song_entrey()
+{
+	int num_songs;
+	cout << "How many songs are you adding ?? :" << endl;
+	cin >> num_songs;
+	for (int i = 1; i <= num_songs; i++)
+	{
+		cout << endl<< "Enter song name : "; 
+		string name; 
+		getline(cin,name);
+		songs.push_back(name);
+	}
+	return num_songs;
 }
