@@ -43,7 +43,7 @@ void playMusic(const string& filename)
 		sf::sleep(sf::milliseconds(100));
 
 		// Display the playing position
-		cout << "\rPlaying... " << music.getPlayingOffset().asSeconds() << " sec        ";
+		cout << "\rPlaying... " << music.getPlayingOffset().asSeconds() << " seckjjk        ";
 		cout << flush;
 	}
 	cout << endl << endl;
