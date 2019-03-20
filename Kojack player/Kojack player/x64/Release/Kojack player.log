@@ -1,7 +1,7 @@
 ﻿  Source.cpp
   Generating code
-  7 of 251 functions ( 2.8%) were compiled, the rest were copied from previous compilation.
-    5 functions were new in current compilation
-    29 functions had inline decision re-evaluated but remain unchanged
+  244 of 246 functions (99.2%) were compiled, the rest were copied from previous compilation.
+    4 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  Kojack player.vcxproj -> C:\Users\Owner\Documents\GitHub\Kojack-Player\Kojack player\x64\Release\Kojack player.exe
+  Kojack player.vcxproj -> C:\Users\lenovo\Documents\GitHub\Kojack-Player\Kojack player\x64\Release\Kojack player.exe
