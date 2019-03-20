@@ -4,22 +4,53 @@
 #include <algorithm>
 #include <cstdio>
 #include <vector>
+#include <map>
+#include <Windows.h>
 using namespace std;
 
-vector <string> songs;
-void playMusic(const std::string& filename)
+vector<string> songs;
+void get_all_files_names_within_folder(string folder)
 {
-	std::cout << filename <<std::endl;
+	string search_path = folder + "/*.*";
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = ::FindFirstFile(search_path.c_str(), &fd);
+	if (hFind != INVALID_HANDLE_VALUE) {
+		do {
+			// read all (real) files in current folder
+			// , delete '!' read other 2 default folder . and ..
+			if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)) {
+				songs.push_back(fd.cFileName);
+			}
+		} while (::FindNextFile(hFind, &fd));
+		::FindClose(hFind);
+	}
+}
+
+
+struct song
+{
+	string name;
+	string genre; 
+	int id;
+	string artist;
+	int rating;
+};
+//accessing the data of each song with a unique id , another idea is fuck ids we use the songs name to call for its data
+int song_entrey();
+map <int, song> sang;
+void playMusic(const string& filename)
+{
+	cout << filename << endl;
 	// Load an ogg music file
 	sf::Music music;
-	if (!music.openFromFile("resources/" + filename + ".wav"))
+	if (!music.openFromFile("resources/" + filename))
 		return;
 
 	// Display music informations
-	std::cout << filename << ":" << std::endl;
-	std::cout << " " << music.getDuration().asSeconds() << " seconds" << std::endl;
-	std::cout << " " << music.getSampleRate() << " samples / sec" << std::endl;
-	std::cout << " " << music.getChannelCount() << " channels" << std::endl;
+	cout << filename << ":" << endl;
+	cout << " " << music.getDuration().asSeconds() << " seconds" << endl;
+	cout << " " << music.getSampleRate() << " samples / sec" << endl;
+	cout << " " << music.getChannelCount() << " channels" << endl;
 
 	// Play it
 	music.play();
@@ -31,34 +62,22 @@ void playMusic(const std::string& filename)
 		sf::sleep(sf::milliseconds(100));
 
 		// Display the playing position
-		std::cout << "\rPlaying... " << music.getPlayingOffset().asSeconds() << " sec        ";
-		std::cout << std::flush;
+		cout << "\rPlaying... " << music.getPlayingOffset().asSeconds() << " sec       ";
+		cout << flush;
 	}
-	std::cout << std::endl << std::endl;
+	cout << endl << endl;
 }
-int song_entrey();
 int main () 
 {
+	string directory;
+	getline(cin, directory);
 	
-	int nums = song_entrey();
-	for (int i = 1; i <= nums; i++)
+	get_all_files_names_within_folder(directory);
+	
+	for (int i = 0; i <= songs.size() ; i++)
 	{
 		playMusic(songs[i]);
 	}
 	system("pause");
 	return 0; 
-}
-int song_entrey()
-{
-	int num_songs;
-	cout << "How many songs are you adding ?? :" << endl;
-	cin >> num_songs;
-	for (int i = 1; i <= num_songs; i++)
-	{
-		cout << endl<< "Enter song name : "; 
-		string name; 
-		getline(cin,name);
-		songs.push_back(name);
-	}
-	return num_songs;
 }
