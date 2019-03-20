@@ -5,6 +5,7 @@
 #include <cstdio>
 #include <vector>
 #include <map>
+
 using namespace std;
 
 struct song
@@ -14,22 +15,23 @@ struct song
 	int id;
 	string artist; 
 };
-map <int, song> sang;
 //accessing the data of each song with a unique id , another idea is fuck ids we use the songs name to call for its data
+int song_entrey();
+map <int, song> sang;
 vector <string> songs;
-void playMusic(const std::string& filename)
+void playMusic(const string& filename)
 {
-	std::cout << filename <<std::endl;
+	cout << filename << endl;
 	// Load an ogg music file
 	sf::Music music;
 	if (!music.openFromFile("resources/" + filename + ".wav"))
 		return;
 
 	// Display music informations
-	std::cout << filename << ":" << std::endl;
-	std::cout << " " << music.getDuration().asSeconds() << " seconds" << std::endl;
-	std::cout << " " << music.getSampleRate() << " samples / sec" << std::endl;
-	std::cout << " " << music.getChannelCount() << " channels" << std::endl;
+	cout << filename << ":" << endl;
+	cout << " " << music.getDuration().asSeconds() << " seconds" << endl;
+	cout << " " << music.getSampleRate() << " samples / sec" << endl;
+	cout << " " << music.getChannelCount() << " channels" << endl;
 
 	// Play it
 	music.play();
@@ -41,16 +43,16 @@ void playMusic(const std::string& filename)
 		sf::sleep(sf::milliseconds(100));
 
 		// Display the playing position
-		std::cout << "\rPlaying... " << music.getPlayingOffset().asSeconds() << " sec        ";
-		std::cout << std::flush;
+		cout << "\rPlaying... " << music.getPlayingOffset().asSeconds() << " sec        ";
+		cout << flush;
 	}
-	std::cout << std::endl << std::endl;
+	cout << endl << endl;
 }
-int song_entrey();
 int main () 
 {
+	int nums;
+	nums = song_entrey();
 	
-	int nums = song_entrey();
 	for (int i = 0; i <= nums; i++)
 	{
 		playMusic(songs[i]);
@@ -61,12 +63,12 @@ int main ()
 int song_entrey()
 {
 	int num_songs;
-	cout << "How many songs are you adding ?? :" << endl;
+	cout << "How many songs are you adding ?? :";
 	cin >> num_songs;
+	string name ; 
 	for (int i = 0; i <= num_songs; i++)
 	{
-		cout << endl<< "Enter song name : "; 
-		string name; 
+		cout << endl<< "Enter song name :"; 
 		getline(cin,name);
 		songs.push_back(name);
 	}
