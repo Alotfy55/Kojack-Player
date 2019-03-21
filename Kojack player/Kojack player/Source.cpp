@@ -52,14 +52,14 @@ void playMusic(const string& filename)
 	cout << " " << music.getDuration().asSeconds() << " seconds" << endl;
 	cout << " " << music.getSampleRate() << " samples / sec" << endl;
 	cout << " " << music.getChannelCount() << " channels" << endl;
-
+	
 		char x;
 	// Play it
 	music.play();
 
 	// Loop while the music is playing
 	cout << "press p to pause"; 
-
+	cout << "Press p to pause , press it again to play /n Press n to play next song /n Press n to play next song /n Press s to stop music ";
 	while (music.getStatus() == sf::Music::Playing || music.getPlayingOffset().asSeconds() < music.getDuration().asSeconds())
 	{
 		// Leave some CPU time for other processes
@@ -67,17 +67,27 @@ void playMusic(const string& filename)
 		// Display the playing position
 		cout << "\rPlaying... " << music.getPlayingOffset().asSeconds() << " sec       ";
 		cout << flush;
-		if (cin >> x, 'p')
-			music.pause();
-		if (cin >> x, 'p')
-			music.play();
-		if (cin >> x, 'n')
-			break; 
+		if (cin >> x)
+		{
+			if ( x == 'p' &&  music.getStatus() == sf::Music::Playing)
+				music.pause();
+			else if ( x == 'p' )
+				music.play();
+			else if ( x == 'n')
+				break;
+			else if ( x == 's')
+			{
+				music.stop();
+			}
+		}
 	}
 	cout << endl << endl;
 }
 int main () 
 {
+	HANDLE hConsole;
+	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+	SetConsoleTextAttribute(hConsole,15);
 	string directory;
 	getline(cin, directory);
 	
@@ -86,6 +96,8 @@ int main ()
 	for (int i = 0; i <= songs.size() ; i++)
 	{
 		playMusic(songs[i]);
+		if (i == songs.size()-1)
+			i = -1;
 	}
 	system("pause");
 	return 0; 
