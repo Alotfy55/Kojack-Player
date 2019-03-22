@@ -58,8 +58,8 @@ void playMusic(const string& filename)
 	music.play();
 
 	// Loop while the music is playing
-	cout << "press p to pause"; 
-	cout << "Press p to pause , press it again to play /n Press n to play next song /n Press n to play next song /n Press s to stop music ";
+
+	cout << "Press p to pause , press it again to play \n Press n to play next song  \n Press s to stop music ";
 	while (music.getStatus() == sf::Music::Playing || music.getPlayingOffset().asSeconds() < music.getDuration().asSeconds())
 	{
 		// Leave some CPU time for other processes
@@ -88,8 +88,7 @@ int main ()
 	HANDLE hConsole;
 	hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 	SetConsoleTextAttribute(hConsole,15);
-	string directory;
-	getline(cin, directory);
+	string directory="C:\\Users\\Owner\\Documents\\GitHub\\Kojack-Player\\Kojack player\\Kojack player\\resources";
 	
 	get_all_files_names_within_folder(directory);
 
