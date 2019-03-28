@@ -8,7 +8,11 @@
 #include <map>
 #include <Windows.h>
 #include <fstream>
+#include <array>        
+#include <random>       
+#include <chrono>       
 #define directory "C:\\Users\\Owner\\Documents\\GitHub\\Kojack-Player\\Kojack player\\Kojack player\\resources"
+#define NUM_SONGS 22  //change this number to whatever number of songs you have in your folder
 using namespace std;
 
 vector<string> songs;
@@ -16,14 +20,41 @@ void get_all_files_names_within_folder(string folder);
 void playMusic(const string& filename, int &play_num);
 void list_display();
 void playback();
+void shuffle(); 
+void check_order(int &i);
 int main()
 {
 	// Welcome to main 
 	get_all_files_names_within_folder(directory);
-	list_display();
-	playback();
+	cout << "to play in shuffle press 's'   else press any key : ";
+	char play; cin >> play;
+	if (play == 's')
+		shuffle();
+	else
+		playback();
 	system("pause");
 	return 0;
+}
+void shuffle()
+{
+	array <int, NUM_SONGS> shuffled_order = {};
+	for (int i = 0; i < songs.size(); i++)
+	{
+		shuffled_order[i] = i;
+	}
+	unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+
+	shuffle(shuffled_order.begin(), shuffled_order.end(), std::default_random_engine(seed));
+	for (int i = 0; i < songs.size(); i++)
+	{
+		cout << songs[shuffled_order[i]]<<endl ;
+		
+	}
+	for (int i = 0; i < songs.size(); i++)
+	{
+		playMusic(songs[shuffled_order[i]] , i );
+		check_order(i);
+	}
 }
 void list_display()
 {
@@ -36,18 +67,23 @@ void list_display()
 }
 void playback()
 {
+	list_display();
 	int n; cin >> n;
 	for (int i = n - 1; i < songs.size(); i++)
 	{
 		playMusic(songs[i], i);
-		if (i == songs.size() - 1)
-		{
-			i = -1;
-		}
-		else if (i == -2)
-		{
-			i = songs.size() - 2; 
-		}
+		check_order(i);
+	}
+}
+void check_order(int &i)
+{
+	if (i == songs.size() - 1)
+	{
+		i = -1;
+	}
+	else if (i == -2)
+	{
+		i = songs.size() - 2;
 	}
 }
 void get_all_files_names_within_folder(string folder)
