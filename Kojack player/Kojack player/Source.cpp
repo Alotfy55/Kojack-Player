@@ -25,6 +25,7 @@ struct song
 	string artist;
 	int year;
 	int rating = 0;
+	bool display = true;
 }song_data[10000];
 
 int shuffled[max_numsongs] , counter=0;
@@ -35,10 +36,11 @@ bool found = false;
 vector<string> songs;
 void get_all_files_names_within_folder(string folder);
 void playMusic(const string& filename, int &play_num);
+void playSound();
 void list_display();
-void playback(vector <string>names);
+void playback(vector <string>names , int play_num);
 void shuffle(vector<string>ToShuffle); 
-void check_order(int &i);
+void check_order(int &i, vector<string> playing);
 void Read_MetaData();
 void sorting();
 void find_by_name();
@@ -53,7 +55,7 @@ void genres();
 void albums();
 void search();
 void rate(int x , string name);
-void Low_Rating(int x);
+void Low_Rating(int x , string name);
 void READ_RATING();
 
 int main()
@@ -81,7 +83,7 @@ int begin(bool first)
 		first = false; 
 	}
 	cout << "Press \n1 to view all songs in the system" << endl;
-	cout << "2 to view all artists of the songs in the system\n3 to view all genres of the songs in the system" << endl;
+	cout << "2 to view all artists in the system\n3 to view all genres in the system" << endl;
 	cout << "4 to view all albums in the system \n5 to search"<<endl;
 	if (!shufflle)
 		cout << "6 To enable Shuffle" << endl;
@@ -136,11 +138,11 @@ void artist()
 		artists.push_back(i);
 		counter++;
 	}
-	cout << "Please enter the number of the artist you want to listen to : ";
+	cout << "Please enter the number of the artist you want to View : ";
 	int x; cin >> x;
 	
 	vector<string>plays;
-	
+	plays.clear();
 
 	for (int i = 0; i < songs.size(); i++)
 	{
@@ -149,7 +151,26 @@ void artist()
 			plays.push_back(songs[i]);
 		}
 	}
-	playback(plays);
+	for (int i = 1; i <= plays.size(); i++)
+	{
+		cout << i << " : " << plays[i-1] << endl;
+	}
+	cout << endl << endl;
+	cout << "Press 1 to play in normal order \nPress 2 to Play a certain song\nPress 3 to Return to Kojack Menu" << endl;
+	cin >> x;
+	switch (x) {
+	case 1:
+		playback(plays, 0);
+		break;
+	case 2:
+		cout << "Enter song number :";
+		cin >> x;
+		playback(plays, x - 1);
+		break;
+	case 3:
+		break;
+	}
+	
 }
 
 void genres()
@@ -166,11 +187,11 @@ void genres()
 		counter++;
 		genre.push_back(i);
 	}
-	cout << "Please enter the number of the genre you want to listen to : ";
+	cout << "Please enter the number of the genre you want to View : ";
 	int x; cin >> x;
 
 	vector<string>plays;
-
+	plays.clear();
 
 	for (int i = 0; i < songs.size(); i++)
 	{
@@ -179,8 +200,27 @@ void genres()
 			plays.push_back(songs[i]);
 		}
 	}
-	playback(plays);
-	system("pause");
+	for (int i = 1; i <= plays.size(); i++)
+	{
+		cout << i << " : " << plays[i - 1] << endl;
+	}
+	cout << endl << endl;
+
+	cout << endl << endl;
+	cout << "Press 1 to play in normal order \nPress 2 to Play a certain song\nPress 3 to Return to Kojack Menu" << endl;
+	cin >> x;
+	switch (x) {
+	case 1:
+		playback(plays,0);
+		break;
+	case 2:
+		cout << "Enter song number :";
+		cin >> x;
+		playback(plays, x - 1);
+		break;
+	case 3:
+		break;
+	}
 }
 
 void albums()
@@ -197,7 +237,7 @@ void albums()
 		counter++;
 		albums.push_back(i);
 	}
-	cout << "Please enter the number of the album you want to listen to : ";
+	cout << "Please enter the number of the album you want to View : ";
 	int x; cin >> x;
 
 	vector<string>plays;
@@ -210,7 +250,25 @@ void albums()
 			plays.push_back(songs[i]);
 		}
 	}
-	playback(plays);
+	for (int i = 1; i <= plays.size(); i++)
+	{
+		cout << i << " : " << plays[i - 1] << endl;
+	}
+	cout << endl << endl;
+	cout << "Press 1 to play in normal order \nPress 2 to Play a certain song\nPress 3 to Return to Kojack Menu" << endl;
+	cin >> x;
+	switch (x) {
+	case 1:
+		playback(plays , 0);
+		break;
+	case 2:
+		cout << "Enter song number :";
+		cin >> x;
+		playback(plays, x - 1);
+		break;
+	case 3:
+		break;
+	}
 }
 
 
@@ -249,28 +307,33 @@ void list_display()
 		cout << i << " : " << song_data[i - 1].name << endl;
 	}
 	cout << endl << endl;
-	cout << "Press 1 to play in normal order \nPress 2 to sort the list\nPress 3 to Return to Kojack Menu" << endl;
+	cout << "Press 1 to play in normal order \nPress 2 to sort the list\nPress 3 to Play certain song \nPress 4 to Return to Kojack Menu" << endl;
 	int x; cin >> x;
 	switch (x) {
 	case 1:
-		playback(songs);
+		playback(songs,0);
 		break;
 	case 2:
 		sorting();
 		break;
 	case 3 : 
+		cout << "Enter song number :";
+		cin >> x;
+		playback(songs, x-1);
+		break;
+	case 4:
 		break;
 	}
 }
 
-void playback(vector<string>names)
+void playback(vector<string>names , int play_num)
 {
 	system("cls");
 	if (!shufflle) {
-	for (int i = 0 ; i < names.size(); i++)
+	for (int i = play_num ; i < names.size(); i++)
 	{
 		playMusic(names[i], i);
-		check_order(i);
+		check_order(i, names);
 		system("cls");
 		if (menu)
 		{
@@ -285,7 +348,7 @@ void playback(vector<string>names)
 		{
 			system("cls");
 			playMusic(names[shuffled[i]], i);
-			check_order(i);
+			check_order(i , names);
 			if (menu)
 			{
 				menu = false;
@@ -295,19 +358,19 @@ void playback(vector<string>names)
 	}
 }
 
-void check_order(int &i)
+void check_order(int &i ,vector <string> playing)
 {
 	// the final i in both cases will be incrmented in the for loop in the calling function
 
 	// to play the first song after the last song
-	if (i == songs.size() - 1)
+	if (i == playing.size() - 1)
 	{
 		i = -1;
 	}
 	// if you play the previous song while playing the first song in the list the i would be -2 
 	else if (i == -2)
 	{
-		i = songs.size() - 2;
+		i = playing.size() - 2;
 	}
 }
 
@@ -480,7 +543,7 @@ void rate(int x, string name)
 		{
 			if (rating < 2)
 			{
-				Low_Rating(x); //playsound !display
+				Low_Rating(x , name); //playsound !display
 			}
 			break;
 		}
@@ -503,9 +566,33 @@ void rate(int x, string name)
 	Rating_file.close();
 }
 
-void Low_Rating(int x)
+void Low_Rating(int x , string name)
 {
+	playSound();
+	for (int i = 0; i < songs.size(); i++)
+	{
+		if (name == song_data[i].name)
+		{
+			song_data[i].display = false;
+		}
+	}
+}
+void playSound()
+{
+	// Load a sound buffer from a wav file
+	sf::SoundBuffer buffer;
+	if (!buffer.loadFromFile("Tda5ol.wav"))
+		return;
 
+	sf::Sound sound(buffer);
+	sound.play();
+// Loop while the sound is playing
+	while (sound.getStatus() == sf::Sound::Playing)
+	{
+		// Leave some CPU time for other processes
+		sf::sleep(sf::milliseconds(100));
+	}
+	std::cout << std::endl << std::endl;
 }
 
 void find_by_name()
@@ -683,6 +770,7 @@ void find_by_year()
 void sorting()
 {
 	vector<string> names;
+	names.clear();
 	cout << "Enter\n1 to sort high to low\n2 to sort low to high :" ;
 	int x, counter = 0; cin >> x;
 	system("cls"); 
@@ -715,7 +803,7 @@ void sorting()
 	int k; cin >> k;
 	switch (k) {
 	case 1:
-		playback(names);
+		playback(names,0);
 		break;
 	case 2:
 		break;
