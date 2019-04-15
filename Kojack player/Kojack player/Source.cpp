@@ -56,6 +56,7 @@ void READ_RATING();
 void search_display(string searched, int choice ,int year=0);
 
 
+
 int main()
 {
 	// Welcome to main 
@@ -211,8 +212,6 @@ void list_display(vector<string> ToPlay, int what)
 		int x;
 		for (int i = 0; i < ToPlay.size(); i++)
 		{
-			if (!song_data[i].display)
-				continue;
 			cout << i+1 << " : " << ToPlay[i] << endl;
 		}
 		cout << endl << endl;
