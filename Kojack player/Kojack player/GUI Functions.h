@@ -1,31 +1,6 @@
 #pragma once
 #include "Fuctions.h"
-#include <SFML/Audio.hpp>
-#include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <iostream>
-#include <string>
-#include <algorithm>
-#include <cstdio> 
-#include <vector>
-#include <map>
-#include <Windows.h>
-#include <fstream>
-#include <array> 
-#include <set>
-#include <random>       
-#include <chrono> 
-#include <conio.h>
-#define directory "C:\\Users\\lenovo\\Documents\\GitHub\\Kojack-Player\\Kojack player\\Kojack player\\resources/"
-#define users_directory "C:\\Users\\lenovo\\Documents\\GitHub\\Kojack-Player\\Kojack player\\Kojack player\\Data/" 
-#define Imgs_directory "C:\\Users\\lenovo\\Documents\\GitHub\\Kojack-Player\\Kojack player\\Kojack player\\Imgs/"
-#define max_numsongs 10000
-#define Low_rating_activator 2
-#define Highest_rating 5
 
-
-using namespace std;
-using namespace sf;
 
 
 struct second_window {
