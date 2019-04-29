@@ -49,28 +49,32 @@ struct user
 
 
 //// global variables  ///
+
+
+//// number of users which will be read from file 
 int NumUsers = 0;
 int index_of_playing_song;
-bool quit = false;
-bool menu = false;
-bool found;
 int shuffled[max_numsongs];
 bool shufflle = false;
 string current_user;
+
+////vectors used a return in certain functions 
 vector<string> songs;
 vector<string> sorted_songs;
+vector <string> songs_by_a_default_thing;
+vector<string> searching_results;
+/////
 int is_songs_sorted = 0;
 bool playing = false;
-vector <string> songs_by_a_default_thing;
 int showanythingiwant;
 sf::Music music;
+//// all songs in the folder
 int number_of_current_songs = 0;
 int rating = 0;
 string playing_song_name = "";
 string userinput_search = "";
 sf::Vector2f mouse_position;
 string mod; 
-vector<string> searching_results;
 int searchicator = 1 ;
 
 
@@ -226,7 +230,6 @@ bool login(string user, string password)
 void READ_RATING()
 {
 	fstream Rating_file;
-	cout << current_user << "zebyy"  << endl ;
 	Rating_file.open(users_directory + current_user + ".txt");
 	int counter = 0;
 	for (int i = 0; i < number_of_current_songs; i++)
@@ -424,56 +427,54 @@ vector<string>search_display(string searched, int choice)
 	int year = 0;
 	if (choice == 3) {
 		for (int i = 0; i < searched.size(); i++) {
-			year *= 10;  
+			year *= 10;
 			year += (searched[i] - '0');
 		}
 	}
 	vector<string> ToPlay;
 	ToPlay.clear();
-	switch (choice)
+	for (int i = 0; i < number_of_current_songs; i++)
 	{
-	case 0:
-		for (int i = 0; i < number_of_current_songs; i++)
-		{
-			if (song_data[i].name.find(searched) < song_data[i].name.size())
+			switch (choice)
 			{
-				ToPlay.push_back(song_data[i].name);
-				found = true;
 
-			}
-		}
+			case 0:
 
-		break;
-	case 1:
-		for (int i = 0; i < number_of_current_songs; i++)
-		{
-			if (song_data[i].album.find(searched) < song_data[i].album.size())
-			{
-				ToPlay.push_back(song_data[i].name);
-				found = true;
-			}
+				if (song_data[i].name.find(searched) < song_data[i].name.size())
+				{
+					ToPlay.push_back(song_data[i].name);
+
+
+				}
+				break;
+		case 1:
+			
+				if (song_data[i].album.find(searched) < song_data[i].album.size())
+				{
+					ToPlay.push_back(song_data[i].name);
+
+				}
+			
+				break;
+		case 2:
+			
+				if (song_data[i].artist.find(searched) != -1)
+				{
+					ToPlay.push_back(song_data[i].name);
+
+				}
+			
+				break;
+		case 3:
+			
+				if (song_data[i].year == year)
+				{
+					ToPlay.push_back(song_data[i].name);
+
+				}
+			
+				break;
 		}
-		break;
-	case 2:
-		for (int i = 0; i < number_of_current_songs; i++)
-		{
-			if (song_data[i].artist.find(searched) != -1)
-			{
-				ToPlay.push_back(song_data[i].name);
-				found = true;
-			}
-		}
-		break;
-	case 3:
-		for (int i = 0; i < number_of_current_songs; i++)
-		{
-			if (song_data[i].year == year)
-			{
-				ToPlay.push_back(song_data[i].name);
-				found = true;
-			}
-		}
-		break;
 	}
 	return ToPlay;
 }
