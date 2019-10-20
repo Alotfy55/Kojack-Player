@@ -1,11 +1,6 @@
 #pragma once
+#include "Fuctions.h"
 
-#include "Functions.h"
-
-
-
-using namespace std;
-using namespace sf;
 
 
 struct second_window {
@@ -88,7 +83,7 @@ struct search_window {
 	Texture search_bar_texture;
 	RectangleShape title_button_search[4];
 	Text title_name_button_search[4];
-
+	
 	Font use_font;
 	////////////// wallpaper ////////
 	Sprite sprite;
@@ -104,16 +99,16 @@ bool focus(sf::FloatRect sprite, sf::Vector2f mouse_position);
 void song_tab(sf::RenderWindow& window, sf::Event& event);
 
 
-void searching_window();
+void searching_window(); 
 void show_welcome_window();
 void Show_main_program();
-void drawing_list_of_anything(vector<string> to_be_shown, float x_position, bool left);
+void drawing_list_of_anything(vector<string> to_be_shown  , float x_position, bool left);
 void displaying_list_of_anything(vector<string>to_be_shown, sf::RenderWindow& window);
 
 void showing_songs_after_clicking(sf::Event& event, vector<string> to_be_shown, int choice);
 void play_music_by_clicking(sf::Event& event);
 
-//////// Gui Functions Definitions ///*****
+//////// Gui Functions Decleration ///*****
 
 void show_welcome_window() {
 	mod = "welcome";
@@ -191,11 +186,11 @@ void show_welcome_window() {
 			}
 			mouse_position.x = sf::Mouse::getPosition(starting_window).x;
 			mouse_position.y = sf::Mouse::getPosition(starting_window).y;
-
+			
 			if (mod == "welcome")
 			{
 				starting_window.clear();
-
+				
 				wpage(starting_window, starting);
 
 			}
@@ -358,10 +353,10 @@ void Show_main_program() {
 
 			mouse_position.x = sf::Mouse::getPosition(window).x;
 			mouse_position.y = sf::Mouse::getPosition(window).y;
-
+			
 		}
-		song_tab(window, event);
-
+			song_tab(window,  event);
+		
 		window.display();
 		window.clear();
 
@@ -439,8 +434,9 @@ bool focus(sf::FloatRect sprite, sf::Vector2f mouse_position) {
 	return false;
 }
 
-void drawing_list_of_anything(vector<string> to_be_shown, float hello, bool left) {
+void drawing_list_of_anything(vector<string> to_be_shown ,  float hello   , bool left  ) {
 	Playing_window.use_font.loadFromFile(Imgs_directory"Roboto-ThinItalic.ttf");
+
 
 	float y = 55;
 	for (int i = 0; i < to_be_shown.size(); ++i) {
@@ -629,8 +625,8 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 	Playing_window.shuffle_button.setSize(sf::Vector2f(60, 60));
 	Playing_window.shuffle_button.setOrigin(37.5, 37.5);
 	Playing_window.shuffle_button.setPosition(145, 565);
-
-
+	
+	
 	if (!shufflle) {
 		Playing_window.shuffle_pic.loadFromFile(Imgs_directory"not shuffled.png");
 	}
@@ -661,10 +657,10 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 
 	Playing_window.search_box.setRadius(30);
 	Playing_window.search_box.setPosition(10, 530);
-
+	
 	Playing_window.search_box_pic.loadFromFile(Imgs_directory"Searh icon.png");
-	Playing_window.search_box.setTexture(&Playing_window.search_box_pic);
-
+	Playing_window.search_box.setTexture(&Playing_window.search_box_pic); 
+	
 	if (focus(Playing_window.search_box.getGlobalBounds(), mouse_position)) {
 		if (event.type == sf::Event::MouseButtonPressed  && event.mouseButton.button == sf::Mouse::Left) {
 			searching_window();
@@ -681,7 +677,7 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 
 
 	if (mod == "song") {
-		window.draw(Playing_window.search_box);
+		window.draw(Playing_window.search_box); 
 		/////show list of songs 
 		drawing_list_of_anything(songs, 0, true);
 
@@ -755,7 +751,7 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 				else {
 					shufflle = true;
 				}
-				sleep(::milliseconds(400));
+
 			}
 		}
 		/////ending shuffle
@@ -802,7 +798,6 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 				if (shufflle == false) {
 					check_order(index_of_playing_song);
 					playMusic(songs[index_of_playing_song]);
-					playing_song_name = songs[index_of_playing_song];
 					get_Rating_for_current_song(songs[index_of_playing_song]);
 
 				}
@@ -811,7 +806,6 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 					playMusic(songs[shuffled[index_of_playing_song]]);
 
 				}
-				sleep(::milliseconds(400));
 			}
 		}
 
@@ -824,14 +818,12 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 
 					check_order(index_of_playing_song);
 					playMusic(songs[index_of_playing_song]);
-					playing_song_name = songs[index_of_playing_song];
 					get_Rating_for_current_song(songs[index_of_playing_song]);
 				}
 				else {
 					check_order(index_of_playing_song);
 					playMusic(songs[shuffled[index_of_playing_song]]);
 				}
-				sleep(::milliseconds(400));
 			}
 		}
 		if (music.getStatus() == sf::SoundSource::Stopped && playing) {
@@ -845,7 +837,6 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 				check_order(index_of_playing_song);
 				playMusic(songs[shuffled[index_of_playing_song]]);
 			}
-			sleep(::milliseconds(400));
 		}
 
 
@@ -859,7 +850,6 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 				else if (is_songs_sorted == 1) {
 					is_songs_sorted = 0;
 				}
-				sleep(::milliseconds(400));
 			}
 		}
 		if (focus(Playing_window.sorting_button[1].getGlobalBounds(), mouse_position)) {
@@ -871,7 +861,6 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 				else if (is_songs_sorted == -1) {
 					is_songs_sorted = 0;
 				}
-				sleep(::milliseconds(400));
 			}
 		}
 
@@ -933,7 +922,6 @@ void song_tab(sf::RenderWindow& window, sf::Event& event) {
 				playing = true;
 
 			}
-			sleep(::milliseconds(400));
 		}
 	}
 	/////ending play 
@@ -1179,3 +1167,7 @@ void searching_window() {
 	}
 
 }
+
+
+
+
